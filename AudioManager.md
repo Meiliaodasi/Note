@@ -1,4 +1,4 @@
-AudioManager
+##AudioManager
 AudioManager am = mContext.getSystemService(Context.AUDIO_SERVICE);
 AudioManager提供下列方法用来查询当前Audio输出的状态：  
 isBluetoothA2dpOn()：检查A2DPAudio是否通过蓝牙耳机；  
