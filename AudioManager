@@ -12,9 +12,19 @@ isWiredHeadsetOn()：检查线控耳机是否连着；注意这个方法只是�
     STREAM_RING：电话铃声的声音
     STREAM_NOTFICATION：系统提示的声音
     STREAM_SYSTEM：系统的声音
-    STREAM_VOICE_CALL：语音电话声音
+    STREAM_VOICE_CALL：语音电话声音  
+    第二个direction,是调整的方向,增加或减少,可以是:    
+    ADJUST_LOWER 降低音量    
+    ADJUST_RAISE 升高音量    
+    ADJUST_SAME 保持不变,这个主要用于向用户展示当前的音量    
+    第三个flags是一些附加参数,只介绍两个常用的
+    FLAG_SHOW_UI 调整时显示音量条,就是按音量键出现的那个  
+    FLAG_PLAY_SOUND 调整音量时播放声音    
   public void setMode (int mode) 设置音频模式。
-音频模式包含音频路由和电话层的行为。因此，这个方法只能用于代替音频设置的平台范围管理应用程序或主要电话应用程序。特别地，MODE_IN_CALL模式只能用在当打电话时的电话程序中，因为它会引起信号从音频层馈入到平台混音器
-。参数
-mode  
-请求的音频模式(MODE_NORMAL, MODE_RINGTONE, MODE_IN_CALL 或MODE_IN_COMMUNICATION)。通知HAL当前的音频状态以便它能适当的路由音频。
+    音频模式包含音频路由和电话层的行为。因此，这个方法只能用于代替音频设置的平台范围管理应用程序或主要电话应用程序。特别地，MODE_IN_CALL模式只能用在当打电话时的电话程序中，因为它会引起信号从音频层馈入到平台混音器。
+    参数mode  请求的音频模式(MODE_NORMAL, MODE_RINGTONE, MODE_IN_CALL 或MODE_IN_COMMUNICATION)。通知HAL当前的音频状态以便它能适当的路由音频。
+  public void setStreamVolume (int streamType, int index, int flags)  设置特定流的音量索引。
+    最大音量  int  maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+    当前音量  int  currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC); 
+    
+  
