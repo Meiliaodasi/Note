@@ -26,5 +26,53 @@ isWiredHeadsetOn()：检查线控耳机是否连着；注意这个方法只是�
   public void setStreamVolume (int streamType, int index, int flags)  设置特定流的音量索引。
     最大音量  int  maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
     当前音量  int  currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC); 
+##Audio Focus
+  AudioFocus机制管理对Audio资源的竞争的管理与协调。Android是多任务系统，Audio系统是竞争资源。
+  使用前，用requestAudioFocus()申请AudioFocus，并根据应用的实际选取恰当的durationHint值；
+  正确的在AudioManager.OnAudioFocusChangeListener中响应AudioFocus失去和重新获取事件；
+  Audio使用结束，用abandonAudioFocus()归还AudioFocus。
+  
+    方法:public int requestAudioFocus (AudioManager.OnAudioFocusChangeListener l, int streamType, int durationHint)
     
+     AudioManager.OnAudioFocusChangeListener是申请成功之后监听AudioFocus使用情况的Listener，后续如果有别的程序要竞争AudioFocus，都是通过这个Listener的onAudioFocusChange()方法来通知这个Audio Focus的使用者的。
+     streamType是《Android中的Audio播放：音量和远程播放控制》中说明的AudioStream，其值取决于AudioManager中的STREAM_xxx，在AudioStream的裁决机制中并未有什么实际意义；
+     durationHint是持续性的指示：
+     AUDIOFOCUS_GAIN指示申请得到的Audio Focus不知道会持续多久，一般是长期占有；
+     AUDIOFOCUS_GAIN_TRANSIENT指示要申请的AudioFocus是暂时性的，会很快用完释放的；
+     AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK不但说要申请的AudioFocus是暂时性的，还指示当前正在使用AudioFocus的可以继续播放，只是要“duck”一下（降低音量）。
+     
+     Returns
+     AUDIOFOCUS_REQUEST_FAILED or AUDIOFOCUS_REQUEST_GRANTED
+     
+    OnAudioFocusChangeListener afChangeListener = new OnAudioFocusChangeListener() {
+    public void onAudioFocusChange(int focusChange) {
+        if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT
+            // Pause playback
+        } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+            // Resume playback 
+        } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+            am.unregisterMediaButtonEventReceiver(RemoteControlReceiver);
+            am.abandonAudioFocus(afChangeListener);
+            // Stop playback
+        }
+      }
+    };
+    
+     AUDIOFOCUS_GAIN：获得了Audio Focus；
+     AUDIOFOCUS_LOSS：失去了Audio Focus，并将会持续很长的时间。这里因为可能会停掉很长时间，所以不仅仅要停止Audio的播放，最好直接释放掉Media资源。而因为停止播放Audio的时间会很长，如果程序因为这个原因而失去AudioFocus，最好不要让它再次自动获得AudioFocus而继续播放，
+     不然突然冒出来的声音会让用户感觉莫名其妙，感受很不好。这里直接放弃AudioFocus，当然也不用再侦听远程播放控制【如下面代码的处理】。要再次播放，除非用户再在界面上点击开始播放，才重新初始化Media，进行播放。
+     AUDIOFOCUS_LOSS_TRANSIENT：暂时失去Audio Focus，并会很快再次获得。必须停止Audio的播放，但是因为可能会很快再次获得AudioFocus，这里可以不释放Media资源；
+     AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK：暂时失去AudioFocus，但是可以继续播放，不过要在降低音量。
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
