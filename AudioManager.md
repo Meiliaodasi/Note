@@ -1,4 +1,4 @@
-##AudioManager
+#AudioManager
     AudioManager am = mContext.getSystemService(Context.AUDIO_SERVICE);
     AudioManager提供下列方法用来查询当前Audio输出的状态：  
     isBluetoothA2dpOn()：检查A2DPAudio是否通过蓝牙耳机；  
@@ -29,6 +29,20 @@
     public void setStreamVolume (int streamType, int index, int flags)  设置特定流的音量索引。
     最大音量  int  maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
     当前音量  int  currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC); 
+    
+    ACTION_AUDIO_BECOMING_NOISY    
+    Broadcast intent, a hint for applications that audio is about to become 'noisy' due to a change in audio outputs.
+    
+    private class NoisyAudioStreamReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
+            // Pause the playback
+          }
+        }
+    }
+    private IntentFilter intentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+    
 ##Audio Focus
      AudioFocus机制管理对Audio资源的竞争的管理与协调。Android是多任务系统，Audio系统是竞争资源。
      使用前，用requestAudioFocus()申请AudioFocus，并根据应用的实际选取恰当的durationHint值；
