@@ -1,0 +1,32 @@
+#车机Debug基本指令
+
+  ##1.	Logcat 部分
+    显示所有log信息 logcat
+    删除所有log信息  logcat –c
+    显示所有log信息及时间  logcat –v threadtime
+    筛选对应tag的log信息（TunerApp为例） logcat |grep TunerApp
+    筛选对应tag的log信息及时间（TunerApp为例） logcat –v threadtime |grep TunerApp
+    过滤多个log标签
+    logcat |grep -E "VolumePanelApp|ScreenOffClockApp"
+
+  ##2．程序应用相关操作
+   挂载 mount –o remount,rw /system/
+   删除文件或apk   rm –rf  例如：rm –rf  CARadio.apk
+   系统应用位置 /system/app
+   U盘根目录 /udisk/single
+   前往指定的位置 cd  例如：cd /system/app
+   拷贝文件或者apk  cp 例如：cp /udisk/single/CARadio.apk  /system/app/
+   给应用赋予权限 chmod 777 例如：chmod 777 /CARadio.apk
+   将应用进行同步 sync ，一般跟在给给应用赋予权限后执行
+   车机进行重启 reboot
+   安装apk指令  pm install 例如 pm install CARadio.apk
+   覆盖安装apk指令 pm install -r 例如 pm install -r CARadio.apk
+   删除安装apk指令 pm uninstall例如 pm uninstall CARadio.apk
+   ./  安装在本文件夹中
+   .*  全部文件
+   查看文件权限 ll
+   列出目录下的文件 ls
+   查看进程资源占用情况 busybox top
+   查看正在运行的进程 ps
+   根据包名启动应用
+   am start -n com.example.android.helloactivity/com.example.android.helloactivity.HelloActivity
