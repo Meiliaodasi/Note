@@ -7,3 +7,8 @@ Activity：onTouchEvent(),dispatchTouchEvent()
 事件处理的返回值：True,处理了，不审核；False，给上级处理。  
 初始情况下，返回值都是false。  
 
+对于Activity：不是继承自View，不存在onInterceptTouchEvent方法，并且不能设置onTouchListener。  
+对于基础控件：不是继承自ViewGroup，也不存在onInterceptTouchEvent方法，但是能够设置onTouchListener。  
+对于ViewGroup：满足所有要求，四个方法都能够响应。  
+
+![事件分发](http://img.blog.csdn.net/20150722124421994)
