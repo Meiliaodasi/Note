@@ -26,7 +26,7 @@ Activity：onTouchEvent(),dispatchTouchEvent()
 8. onInterceptTouchEvent有两个作用：1.拦截Down事件的分发。2.中止Up和Move事件向目标View传递，使得目标View所在的ViewGroup捕获Up和Move事件。  
 9. View的长按事件是在ACTION_DOWN中执行，要想执行长按事件该View必须是longClickable的，并且不能产生ACTION_MOVE。View的点击事件是在ACTION_UP中执行。   
 
-###自定义了控件（View）的onTouchEvent直接返回true而不调运super方法时，事件派发机制如同4.2.1类似，只是最后up事件没有触发onClick而已（因为没有调用super）。  
+###自定义了控件（View）的onTouchEvent直接返回true而不调运super方法时，事件派发机制类似，只是最后up事件没有触发onClick而已（因为没有调用super）。  
 
 
 
