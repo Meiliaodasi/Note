@@ -32,5 +32,12 @@
      setMeasuredDimension(width, height);  
     }  
     
+###流程   [分类与流程](https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/Advance/%5B01%5DCustomViewProcess.md)
+构造函数(View的初始化)  
+onMeasure(测量View的大小)   
+onSizeChanged(确定View的大小)  
+onLayout(确定子View的布局)  
+ondraw(绘制内容)  
+###[自定义View](https://github.com/GcsSloop/AndroidNote)
     
     
