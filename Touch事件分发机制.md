@@ -28,6 +28,17 @@ Activity：onTouchEvent(),dispatchTouchEvent()
 
 ###自定义了控件（View）的onTouchEvent直接返回true而不调运super方法时，事件派发机制类似，只是最后up事件没有触发onClick而已（因为没有调用super）。  
 
+###整个View的事件转发流程是：
+
+View.dispatchEvent->View.setOnTouchListener->View.onTouchEvent
+
+在dispatchTouchEvent中会进行OnTouchListener的判断，如果OnTouchListener不为null且返回true，则表示事件被消费，onTouchEvent不会被执行；否则执行onTouchEvent。
+
+1、如果ViewGroup找到了能够处理该事件的View，则直接交给子View处理，自己的onTouchEvent不会被触发；
+
+2、可以通过复写onInterceptTouchEvent(ev)方法，拦截子View的事件（即return true），把事件交给自己处理，则会执行自己对应的onTouchEvent方法
+
+3、子View可以通过调用getParent().requestDisallowInterceptTouchEvent(true);  阻止ViewGroup对其MOVE或者UP事件进行拦截；
 
 
 
