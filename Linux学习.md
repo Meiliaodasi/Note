@@ -1,4 +1,0 @@
-sudo passwd root  
-apt.config: Acquire::http::proxy "http://username:passowrd@proxy:80/";     
-            Acquire::ftp::proxy "ftp://username:password@proxy:80/";  
-            Acquire::https::proxy "https://username:password@proxy:80/";  
