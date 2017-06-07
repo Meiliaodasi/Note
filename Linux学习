@@ -4,3 +4,6 @@ Acquire::http::proxy "http://username:passowrd@proxy:80/";
 Acquire::ftp::proxy "ftp://username:password@proxy:80/";  
 Acquire::https::proxy "https://username:password@proxy:80/";  
 
+2.基本指令
+echo 终端显示内容
+wget 获取网络文件
